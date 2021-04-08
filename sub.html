@@ -37,10 +37,29 @@
             </form>
           </div>
           <div class="btn-pack">
-            <a href="#" class="btn-item login pc-only">
-              <img src="images/icon-login.png" alt="로그인" />
-              <span>로그인</span>
-            </a>
+            <div class="login-wrap">
+              <!-- <a href="#" class="btn-item login pc-only">
+                <img src="images/icon-login.png" alt="로그인" />
+                <span>로그인</span>
+              </a> -->
+              <button id="myMenuBtn" onclick="toggleMyMenu(true)" class="btn-item login my-btn pc-only">
+                <img src="images/icon-login.png" alt="김몽땅 님" />
+                <span>김몽땅 님</span>
+                <img src="./images/logout_arrow.png" alt="메뉴열기" class="arrow" />
+              </button>
+              <ul id="myMenu" class="my-menu">
+                <li>
+                  <a href="" >
+                    마이페이지
+                  </a>
+                </li>
+                <li>
+                  <a href="" >
+                    로그아웃
+                  </a>
+                </li>
+              </ul>
+            </div>
             <a href="#" class="btn-item event-write">이벤트 등록하기</a>
           </div>
         </div>
@@ -800,6 +819,16 @@
         }
       }
 
+      // PC용 로그인시 마이 메뉴
+      function toggleMyMenu(isShow) {
+        var myMenu = document.getElementById('myMenu');
+        if(isShow) {
+          myMenu.classList.add('active');
+        } else {
+          myMenu.classList.remove('active');
+        }
+      }
+
       // 메뉴 전체보기 토글
       function toggleFullNavigation() {
         document.querySelector(".gnb").classList.toggle("on");
@@ -959,6 +988,18 @@
         var filterBtn = document.querySelector('.filter-item.active');
         if (!target.classList.contains("filter-btn") && filterBtn) {
           closeAllFilter();
+          return;
+        }
+        // PC용 로그인시 버튼 메뉴 초기화
+        var myMenuBtn = document.getElementById('myMenuBtn');
+        var isMyMenuBtnChild = false;
+        for (var i = 0; i < myMenuBtn.children.length; i++) {
+          if(myMenuBtn.children[i] === target) {
+            isMyMenuBtnChild = true
+          }
+        }
+        if(!(target === myMenuBtn || isMyMenuBtnChild) && myMenu.classList.contains('active')) {
+          toggleMyMenu(false);
           return;
         }
       });
